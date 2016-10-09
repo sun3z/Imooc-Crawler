@@ -9,8 +9,6 @@ class Run
     {
         $main = Boot::CrawlerController();
 
-        // $main->getOne(2221224);
-
         $main->getAll();
     }
 }
