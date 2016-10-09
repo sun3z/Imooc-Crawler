@@ -4,6 +4,9 @@ namespace App\Curl;
 use App\Curl\Analysis;
 use App\Curl\CrawlerTrait\InfoRegex;
 
+/**
+ * 用户基本信息分析
+ */
 class AnalysisInfo extends Analysis
 {
     // 引入正则
@@ -13,10 +16,18 @@ class AnalysisInfo extends Analysis
      * 爬虫分析主程序
      * 
      * @param  string $data 抓取到的原始数据
-     * @return array       
+     * @return mixed 分析数据成功返回array，404数据返回false       
      */
     public function startAnalysis($data)
     {
+        $this->data = $data;
+
+        // 404分析
+        if($this->analysisCrawler()) {
+           return false; 
+        }
+
+        // 获取用户的基本信息
         $this->getName();
         $this->getLearn();
         $this->getSex();
@@ -28,6 +39,15 @@ class AnalysisInfo extends Analysis
         $this->getFans();
 
         return $this->afterAnalysis;
+    }
+
+    /**
+     * 爬虫404分析
+     * 
+     * @return boolean 404页面返回true，正常数据返回false
+     */
+    public function analysisCrawler() {
+        return preg_match($this->pattern['check'], $this->data) == 1 ? true : false;
     }
 
     /**

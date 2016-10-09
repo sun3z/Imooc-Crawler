@@ -1,6 +1,9 @@
 <?php 
 namespace App\Curl;
 
+/**
+ * 爬虫分析抽象类
+ */
 abstract class Analysis
 {
 
@@ -14,22 +17,6 @@ abstract class Analysis
      * 爬虫分析主程序
      */
     abstract public function startAnalysis($data);
-
-    /**
-     * 要抓取用户合法性检测
-     * 
-     * @return boolean
-     */
-    public function analysisCrawler($data)
-    {
-        $this->data = $data;
-
-        $checkPattern = "/<p>Sorry，找不到你想要的页面<\/p>/";
-        if(preg_match($checkPattern, $this->data) == 1) {
-            return false;
-        }
-        return true;
-    }
 
     /**
      * 析构函数，释放资源

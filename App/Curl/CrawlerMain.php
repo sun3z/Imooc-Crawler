@@ -4,6 +4,9 @@ namespace App\Curl;
 use App\Factory\Boot;
 use App\Config\CrawlerConfig;
 
+/**
+ * 单进程爬虫主程序
+ */
 class CrawlerMain
 {
     /**
@@ -41,22 +44,22 @@ class CrawlerMain
      * 执行抓取用户基本信息操作
      * 
      * @param int $userid
+     * @return boolean 成功返回true，404没有分析到用户数据返回false
      */
     protected function crawlerInfo($userid)
     {   
         // 抓取
         $this->crawler = Boot::Crawler($this->crawlerConfig->getUserURL($userid));
-        $this->crawler->exec();
         $data = $this->crawler->getResult();
 
-        // 验证
-        if(!$this->analysisInfo->analysisCrawler($data)) {
+        // 分析
+        if(($userInfo = $this->analysisInfo->startAnalysis($data)) !== false) {
+            $this->data['moocid'] = $userid;
+            $this->data = array_merge($this->data, $userInfo);
+            return true;
+        } else {
             return false;
         }
-
-        // 分析
-        $this->data['moocid'] = $userid;
-        $this->data = array_merge($this->data, $this->analysisInfo->startAnalysis($data));
     }
 
     /**
@@ -73,13 +76,7 @@ class CrawlerMain
 
         // 抓取
         $this->crawler = Boot::Crawler($url);
-        $this->crawler->exec();
         $data = $this->crawler->getResult();
-
-        // 验证
-        if(!$this->analysisCourses->analysisCrawler($data)) {
-            return false;
-        }
 
         // 分析
         $coursesArr = [];
@@ -97,16 +94,19 @@ class CrawlerMain
     /**
      * 获取处理好的结果
      * 
-     * @return array 
+     * @return mixed 成功返回数据数组，404没有分析到用户数据返回false
      */
     public function getResult($userid)
-    {
-        $this->crawlerInfo($userid);
-        $data = $this->crawlerCourses($userid);
-        $this->data['coursesNum'] = count($data);
-        $this->data['courses'] = $data;
-
-        return $this->data;
+    {   
+        // 分析用户信息成功则继续进行抓取用户课程信息
+        if($this->crawlerInfo($userid)) {
+            $data = $this->crawlerCourses($userid);
+            $this->data['coursesNum'] = count($data);
+            $this->data['courses'] = $data;
+            return $this->data;
+        } else {
+            return false;
+        }
     }
 
     /**

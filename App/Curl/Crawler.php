@@ -7,23 +7,23 @@ class Crawler
     private $curl = null;
 
     // 获取的结果集
-    private $result = '';
+    private $result = [];
 
     /**
-     * 构造方法，初始化URL和基础配置
+     * 构造方法，初始化
      * 
      * @param string $url 
      */
     public function __construct($url)
     {
         $this->curl = curl_init($url);
-        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
     }
 
     /**
      * 执行cURL操作
      */
-    public function exec()
+    private function exec()
     {
         $this->result = curl_exec($this->curl);
     }
@@ -35,6 +35,7 @@ class Crawler
      */
     public function getResult()
     {
+        $this->exec();
         return $this->result;
     }
 

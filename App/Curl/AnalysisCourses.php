@@ -4,6 +4,9 @@ namespace App\Curl;
 use App\Curl\Analysis;
 use App\Curl\CrawlerTrait\CoursesRegex;
 
+/**
+ * 用户课程信息分析
+ */
 class AnalysisCourses extends Analysis
 {
     // 引入正则
@@ -41,16 +44,24 @@ class AnalysisCourses extends Analysis
      */
     public function hasNext()
     {   
-        // 下一页不存在
-        if(preg_match($this->pattern['hasNext'], $this->data) == 0) {
-            // 只存在20个的特殊情况
-            preg_match($this->pattern['hasNext20'], $this->data, $result);
-            if(trim($result[1]) == '') {
-                return false;
-            }
+        if(preg_match($this->pattern['hasNext'], $this->data) == 1) {
+            return true;
+        } else {
             return false;
         }
-        return true;
+
+        // 下一页不存在
+        // if(preg_match($this->pattern['hasNext'], $this->data) == 0) {
+        //     var_dump()
+        //     var_dump(preg_match($this->pattern['hasNext'], $this->data) == 0);exit;
+        //     // 只存在20个的特殊情况
+        //     preg_match($this->pattern['hasNext20'], $this->data, $result);
+        //     if(trim($result[1]) == '') {
+        //         return false;
+        //     }
+        //     return false;
+        // }
+        // return true;
         // if(count($coursesArr) > 20) {
         //     if(preg_match($this->pattern['hasNext'], $this->data) != 1) {
         //         return true;

@@ -3,7 +3,9 @@ namespace App\Curl\CrawlerTrait;
 
 trait InfoRegex
 {
-    public $pattern = [
+    protected $pattern = [
+        // 404 
+        'check' => "/<p>Sorry，找不到你想要的页面<\/p>/",
     
         // 用户名
         'name'      =>  "/<h3\s+?class=['|\"]user-name\s+?clearfix['|\"]>\s+?<span>(.*?)<\/span>/",

@@ -1,6 +1,9 @@
 <?php 
 namespace App\Config;
 
+/**
+ * 爬虫信息配置获取
+ */
 class CrawlerConfig
 {   
     
