@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit1802bcd08d124da04bc47c40d2e8aa2e
 {
     public static $prefixLengthsPsr4 = array (
+        'Q' => 
+        array (
+            'QL\\' => 3,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -14,10 +18,30 @@ class ComposerStaticInit1802bcd08d124da04bc47c40d2e8aa2e
     );
 
     public static $prefixDirsPsr4 = array (
+        'QL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jaeger/querylist',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/App',
         ),
+    );
+
+    public static $classMap = array (
+        'Callback' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'CallbackBody' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'CallbackParam' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'CallbackParameterToReference' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'CallbackReturnReference' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'CallbackReturnValue' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'DOMDocumentWrapper' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'DOMEvent' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'ICallbackNamed' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'phpQuery' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'phpQueryEvents' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'phpQueryObject' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
+        'phpQueryPlugins' => __DIR__ . '/..' . '/jaeger/phpquery-single/phpQuery.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -25,6 +49,7 @@ class ComposerStaticInit1802bcd08d124da04bc47c40d2e8aa2e
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit1802bcd08d124da04bc47c40d2e8aa2e::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit1802bcd08d124da04bc47c40d2e8aa2e::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1802bcd08d124da04bc47c40d2e8aa2e::$classMap;
 
         }, null, ClassLoader::class);
     }

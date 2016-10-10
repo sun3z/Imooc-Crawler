@@ -1,4 +1,7 @@
 {
+    "require": {
+        "jaeger/querylist": "^3.1"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "App/"
